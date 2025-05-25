@@ -1,8 +1,18 @@
-# 1. Importul bibliotecilor esențiale
 import pandas as pd
 
-# 2. Încărcarea datasetului complet (cel cu valori lipsă sau fără, după cum alegi tu)
+# Încărcarea datasetului complet
 df = pd.read_csv("basketball_players_overall.csv")  # sau "basketball_players_full_over60.csv"
 
-# 3. Afișarea primelor 5 linii pentru inspecție
+# Afișarea primelor 5 linii pentru inspecție
 print(df.head())
+
+# Afișare câte valori lipsă sunt pe coloană
+print("Valori lipsă înainte de curățare dataset:")
+print(df.isnull().sum())
+
+# Ștergere rânduri care conțin cel puțin o valoare lipsă
+df.dropna(inplace=True)
+
+print("\nValori lipsă după curățare:")
+print(df.isnull().sum())
+
