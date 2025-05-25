@@ -86,3 +86,32 @@ print(f"Mean Squared Error (MSE): {mse:.2f}")
 print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 print(f"R² Score: {r2:.2f}")
+
+# Grafice
+plt.figure(figsize=(6, 4))
+
+# Valorile reale - albastru
+plt.scatter(range(len(y_test)), y_test, label="Valori reale", color='blue', alpha=0.6, marker='o')
+
+# Valorile prezise - portocaliu
+plt.scatter(range(len(y_pred)), y_pred, label="Valori prezise", color='orange', alpha=0.6, marker='x')
+
+# Etichete și legendă
+plt.xlabel("Indexul exemplului")
+plt.ylabel("Overall Rating")
+plt.title("Compararea valorilor reale vs. prezise")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("scatter_valori_reale_vs_prezise.png")
+
+errors = y_test - y_pred
+
+plt.figure(figsize=(6, 4))
+plt.hist(errors, bins=30, edgecolor='black')
+plt.title("Distribuția erorilor (reziduuri)")
+plt.xlabel("Eroare (valoare reală - valoare prezisă)")
+plt.ylabel("Frecvență")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("histograma_erori.png")
