@@ -19,9 +19,12 @@ df.dropna(inplace=True)
 print("\nValori lipsă după curățare:")
 print(df.isnull().sum())
 
-# Definim X (caracteristici) și y (ținta de prezis - overall_rating)
-X = df.drop(columns=['overall_rating'])  # totul în afară de target
-y = df['overall_rating']                 # targetul
+# Eliminăm 'name' și aplicăm One-Hot Encoding
+df = df.drop(columns=['name'])
+df = pd.get_dummies(df, columns=['position', 'team'], drop_first=True)
+
+X = df.drop(columns=['overall_rating'])
+y = df['overall_rating']
 
 # Împărțim în train și test (80% - 20%)
 X_train, X_test, y_train, y_test = train_test_split(
@@ -56,3 +59,18 @@ plt.title("Matricea de corelație între variabile numerice")
 plt.tight_layout()
 plt.savefig("heatmap_corelatii.png")
 
+#Antrenarea și evaluarea modelului
+from sklearn.linear_model import LinearRegression
+
+# Creare model
+model = LinearRegression()
+
+# Antrenare model pe setul de antrenament
+model.fit(X_train, y_train)
+
+# Prezicere overall pentru datele de test
+y_pred = model.predict(X_test)
+
+# Primele 5 predicții
+print("Predicții:", y_pred[:5])
+print("Adevărate:", y_test[:5].values)
