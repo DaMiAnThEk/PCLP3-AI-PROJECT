@@ -1,5 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Încărcarea datasetului complet
 df = pd.read_csv("basketball_players_overall.csv")  # sau "basketball_players_full_over60.csv"
@@ -38,4 +40,19 @@ test_set = pd.concat([X_test, y_test], axis=1)
 train_set.to_csv("basketball_train.csv", index=False)
 test_set.to_csv("basketball_test.csv", index=False)
 print("DONE!")
+
+# Analiza pe dataset
+numeric_df = df.select_dtypes(include=['number'])
+# Matricea de corelație
+corr_matrix = numeric_df.corr()
+# Heatmap
+plt.figure(figsize=(12, 10))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Matricea de corelație între variabile numerice")
+plt.tight_layout()
+plt.figure(figsize=(12, 10))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Matricea de corelație între variabile numerice")
+plt.tight_layout()
+plt.savefig("heatmap_corelatii.png")
 
